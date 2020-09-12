@@ -30,6 +30,19 @@ public:
     // Funciones publicas ACadena
     const char* c_str() const;
     void limpiar();
+
+    //Funciones comunes con operator
+    const char operator[](unsigned int posicion) const;
+    void operator+=(const ACadena & cadena);
+    const char obtener(unsigned int posicion) const;
+
+    //Utilidades
+    // Está función reemplaza en el objeto original
+    // y devuelve el mismo objeto con la cadena ya reemplaza
+    // Reemplaza todas las coincidencias
+    //const ACadena reemplazar(ACadena buscar, ACadena reemplazo);
+    // Obtener el tamaño de la cadena
+    const unsigned int obtenerTamano();
 };
 
 #endif // ACADENA_H

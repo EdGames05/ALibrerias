@@ -16,7 +16,7 @@ ACadena::~ACadena()
 
 ACadena::ACadena(const char* str)
 {
-    this->tamano = sizeof(str);
+    this->tamano = strlen(str);
     this->cadena = new char[this->tamano + 1];
     strncpy_s(this->cadena, this->tamano + 1, str, this->tamano);
 }
@@ -91,4 +91,49 @@ const char* ACadena::c_str() const
 void ACadena::limpiar()
 {
     this->__limpiar__();
+}
+
+void ACadena::operator+=(const ACadena & cadena)
+{
+    /*const char* valor = this->cadena;
+    this->limpiar();
+    this->tamano = strlen(valor) + cadena.tamano;
+    this->cadena = new char[this->tamano + 1];
+    strncpy_s(this->cadena, this->tamano + 1, valor, strlen(valor)); // Reasignar la primera cadena
+    strncpy_s(this->cadena + this->tamano, cadena.tamano + 1, cadena.cadena, cadena.tamano); // Concatenar la cadena que quiero sumar*/
+}
+
+const char ACadena::operator[](unsigned int posicion) const
+{
+    if (posicion > this->tamano)
+    {
+        return '\0';
+    }
+
+    return this->cadena[posicion];
+}
+
+const char ACadena::obtener(unsigned int posicion) const
+{
+    if (posicion > this->tamano)
+    {
+        return '\0';
+    }
+
+    return this->cadena[posicion];
+}
+
+// Funciones de utilidades
+
+// Está función reemplaza en el objeto original
+// y devuelve el mismo objeto con la cadena ya reemplaza
+// Reemplaza todas las coincidencias
+/*const ACadena ACadena::reemplazar(ACadena buscar, ACadena reemplazo)
+{
+
+}*/
+
+const unsigned int ACadena::obtenerTamano()
+{
+    return this->tamano;
 }
