@@ -2,47 +2,47 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 using namespace std;
 
 ACadena::ACadena() : tamano(0), cadena(NULL)
 {
+    setlocale(LC_ALL, "es_ES");
 }
 
-ACadena::~ACadena()
-{
+ACadena::~ACadena() {
     __limpiar__();
 }
 
-ACadena::ACadena(const char* str)
-{
+ACadena::ACadena(const char* str) {
+    setlocale(LC_ALL, "es_ES");
     this->tamano = strlen(str);
     this->cadena = new char[this->tamano + 1];
     strncpy_s(this->cadena, this->tamano + 1, str, this->tamano);
 }
 
-ACadena::ACadena(const ACadena & obj)
+ACadena::ACadena(char str) {
+    setlocale(LC_ALL, "es_ES");
+    this->tamano = 1;
+    this->cadena = new char[this->tamano + 1];
+    this->cadena[0] = str;
+}
+
+ACadena::ACadena(ACadena&& obj)
 {
+    setlocale(LC_ALL, "es_ES");
     // Limpiar antes de asignar
     __limpiar__();
 
     this->tamano = obj.tamano;
-    this->cadena = new char[this->tamano + 1];
-    strncpy_s(this->cadena, this->tamano + 1, obj.cadena, this->tamano);
+    this->cadena = obj.cadena;
+    obj.cadena = NULL;
 }
 
-ACadena::ACadena(ACadena && objStr)
+ACadena& ACadena::operator=(const ACadena& obj)
 {
-    // Limpiar antes de asignar
-    __limpiar__();
-
-    this->tamano = objStr.tamano;
-    this->cadena = objStr.cadena;
-    objStr.cadena = NULL;
-}
-
-ACadena& ACadena::operator=(const ACadena & obj)
-{
+    setlocale(LC_ALL, "es_ES");
     // Limpiar antes de asignar
     __limpiar__();
 
@@ -52,18 +52,19 @@ ACadena& ACadena::operator=(const ACadena & obj)
     return *this;
 }
 
-ACadena& ACadena::operator=(ACadena && objStr)
+ACadena& ACadena::operator=(ACadena&& obj)
 {
+    setlocale(LC_ALL, "es_ES");
     // Limpiar antes de asignar
     __limpiar__();
 
-    this->tamano = objStr.tamano;
-    this->cadena = objStr.cadena;
-    objStr.cadena = NULL;
+    this->tamano = obj.tamano;
+    this->cadena = obj.cadena;
+    obj.cadena = NULL;
     return *this;
 }
 
-ACadena ACadena::operator+(const ACadena & obj)
+ACadena ACadena::operator+(const ACadena& obj)
 {
     ACadena str;
     str.tamano = this->tamano + obj.tamano;
@@ -88,52 +89,44 @@ const char* ACadena::c_str() const
     return this->cadena;
 }
 
-void ACadena::limpiar()
+inline void ACadena::limpiar()
 {
     this->__limpiar__();
 }
 
-void ACadena::operator+=(const ACadena & cadena)
+void ACadena::operator+=(const ACadena& acadena)
 {
-    /*const char* valor = this->cadena;
+    const char* valor = this->cadena;
     this->limpiar();
-    this->tamano = strlen(valor) + cadena.tamano;
+    this->tamano = strlen(valor) + acadena.tamano;
     this->cadena = new char[this->tamano + 1];
     strncpy_s(this->cadena, this->tamano + 1, valor, strlen(valor)); // Reasignar la primera cadena
-    strncpy_s(this->cadena + this->tamano, cadena.tamano + 1, cadena.cadena, cadena.tamano); // Concatenar la cadena que quiero sumar*/
+    strncpy_s(this->cadena + this->tamano, acadena.tamano + 1, acadena.cadena, acadena.tamano); // Concatenar la cadena que quiero sumar*/
 }
 
-const char ACadena::operator[](unsigned int posicion) const
+const ACadena ACadena::operator[](unsigned int posicion) const
 {
     if (posicion > this->tamano)
     {
-        return '\0';
+        ACadena str = "\0";
+        return str;
     }
 
-    return this->cadena[posicion];
+    ACadena str = this->cadena[posicion];
+    return str;
 }
 
-const char ACadena::obtener(unsigned int posicion) const
-{
+const ACadena ACadena::obtener(unsigned int posicion) const {
     if (posicion > this->tamano)
     {
-        return '\0';
+        ACadena str = "\0";
+        return str;
     }
 
-    return this->cadena[posicion];
+    ACadena str = this->cadena[posicion];
+    return str;
 }
 
-// Funciones de utilidades
-
-// Está función reemplaza en el objeto original
-// y devuelve el mismo objeto con la cadena ya reemplaza
-// Reemplaza todas las coincidencias
-/*const ACadena ACadena::reemplazar(ACadena buscar, ACadena reemplazo)
-{
-
-}*/
-
-const unsigned int ACadena::obtenerTamano()
-{
+const unsigned int ACadena::obtenerTamano() {
     return this->tamano;
 }
