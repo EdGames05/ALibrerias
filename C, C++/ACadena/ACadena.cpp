@@ -2,13 +2,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 
 using namespace std;
 
 ACadena::ACadena() : tamano(0), cadena(NULL)
 {
-    setlocale(LC_ALL, "es_ES");
 }
 
 ACadena::~ACadena() {
@@ -16,22 +14,21 @@ ACadena::~ACadena() {
 }
 
 ACadena::ACadena(const char* str) {
-    setlocale(LC_ALL, "es_ES");
+    __limpiar__();
     this->tamano = strlen(str);
     this->cadena = new char[this->tamano + 1];
     strncpy_s(this->cadena, this->tamano + 1, str, this->tamano);
 }
 
 ACadena::ACadena(char str) {
-    setlocale(LC_ALL, "es_ES");
-    this->tamano = 1;
+    __limpiar__();
+    this->tamano = strlen(&str);
     this->cadena = new char[this->tamano + 1];
-    this->cadena[0] = str;
+    strncpy_s(this->cadena, this->tamano + 1, &str, this->tamano);
 }
 
 ACadena::ACadena(ACadena&& obj)
 {
-    setlocale(LC_ALL, "es_ES");
     // Limpiar antes de asignar
     __limpiar__();
 
@@ -42,7 +39,6 @@ ACadena::ACadena(ACadena&& obj)
 
 ACadena& ACadena::operator=(const ACadena& obj)
 {
-    setlocale(LC_ALL, "es_ES");
     // Limpiar antes de asignar
     __limpiar__();
 
@@ -54,7 +50,6 @@ ACadena& ACadena::operator=(const ACadena& obj)
 
 ACadena& ACadena::operator=(ACadena&& obj)
 {
-    setlocale(LC_ALL, "es_ES");
     // Limpiar antes de asignar
     __limpiar__();
 
