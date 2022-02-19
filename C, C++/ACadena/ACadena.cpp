@@ -37,6 +37,12 @@ ACadena::ACadena(ACadena&& obj)
     obj.cadena = NULL;
 }
 
+ACadena::ACadena(const ACadena& obj)
+{
+    this->tamano = obj.tamano;
+    this->cadena = obj.cadena;
+}
+
 ACadena& ACadena::operator=(const ACadena& obj)
 {
     // Limpiar antes de asignar
@@ -122,6 +128,6 @@ const ACadena ACadena::obtener(unsigned int posicion) const {
     return str;
 }
 
-const unsigned int ACadena::obtenerTamano() {
+const unsigned int ACadena::obtenerTamano() const noexcept {
     return this->tamano;
 }

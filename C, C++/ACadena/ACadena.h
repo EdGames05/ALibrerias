@@ -39,7 +39,7 @@ public:
     /*
       Utilidades
     */
-    const unsigned int obtenerTamano();
+    [[nodiscard]] const unsigned int obtenerTamano() const noexcept;
 };
 
 #endif /* ACADENA_H */
